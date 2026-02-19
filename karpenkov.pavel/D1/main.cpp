@@ -47,8 +47,8 @@ int main()
         cap += number;
         r = karpenkov::addNewLetters(r, size, number, letter);
       }
-      catch(std::bad_alloc){
-        std::cerr << "bad_alloc" << '\n';
+      catch(std::bad_alloc & e){
+        std::cerr << "bad_alloc" << e.what() << '\n';
          delete [] r;
         return 2;
       }
@@ -62,7 +62,7 @@ int main()
       r = karpenkov::cut(r, size);
     }
     catch(std::bad_alloc & e){
-      std::cerr << "bad_alloc " << e.what () << '\n';
+      std::cerr << "bad_alloc " << e.what() << '\n';
       delete [] r;
     }
   }
