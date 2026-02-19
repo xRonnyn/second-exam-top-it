@@ -35,14 +35,13 @@ int main()
   size_t size = 0, cap = 10, number = 0;
   char letter;
   char * r = new char[cap];
+  bool inputError = false;
   while (std::cin >> number){
     if (!(std::cin >> letter)){
-      std::cerr << "input error" << '\n';
-      delete [] r;
-      std::cout << "";
-      return 1;
+      inputError = true;
+      break;
     }
-    if (size + number >= cap){
+    if (size + number > cap){
       size_t newCap = cap + number + 10;
       try{
         r = karpenkov::expand(r, size, newCap);
@@ -51,11 +50,21 @@ int main()
       catch(std::bad_alloc & e){
         std::cerr << "bad_alloc" << e.what() << '\n';
         delete [] r;
-        std::cout << "";
+        std::cout << std::endl;
         return 2;
       }
     }
     r = karpenkov::addNewLetters(r, size, number, letter);
+  }
+  if (inputError){
+    karpenkov::reverseLetters(r, size);
+    return 1;
+  }
+  if (std::cin.fail() && !std::cin.eof()){
+    std::cerr << "input error" << '\n';
+    delete [] r;
+    std::cout << std::endl;
+    return 1;
   }
   if (size == 0){
     delete [] r;
@@ -74,5 +83,9 @@ int main()
     }
   }
   karpenkov::reverseLetters(r, size);
+  if (inputError){
+    std::cerr << "input error" << '\n';
+    return 1;
+  }
   return 0;
 }
