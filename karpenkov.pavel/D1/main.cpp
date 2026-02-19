@@ -47,10 +47,10 @@ int main()
         r = karpenkov::expand(r, size, newCap);
         cap = newCap;
       }
-      catch(std::bad_alloc & e){
-        std::cerr << "bad_alloc" << e.what() << '\n';
+      catch(...){
+        std::cerr << "bad_alloc" << '\n';
         delete [] r;
-        std::cout << std::endl;
+        std::cout << '\n';
         return 2;
       }
     }
@@ -63,22 +63,22 @@ int main()
   if (std::cin.fail() && !std::cin.eof()){
     std::cerr << "input error" << '\n';
     delete [] r;
-    std::cout << std::endl;
+    std::cout << '\n';
     return 1;
   }
   if (size == 0){
     delete [] r;
-    std::cout << std::endl;
+    std::cout << '\n';
     return 0;
   }
   if (size < cap){
     try{
       r = karpenkov::cut(r, size);
     }
-    catch(std::bad_alloc & e){
-      std::cerr << "bad_alloc " << e.what() << '\n';
+    catch(...){
+      std::cerr << "bad_alloc " << '\n';
       delete [] r;
-      std::cout << std::endl;
+      std::cout << '\n';
       return 2;
     }
   }
